@@ -6,7 +6,7 @@
 }
 
 body {
-  --seek-before-width: 0%;
+  --seek-before-width: 70%;
   --volume-before-width: 100%;
   --buffered-width: 80%;
   display: grid;

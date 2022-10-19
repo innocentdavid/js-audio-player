@@ -1,3 +1,4 @@
+const audioPlayerContainer = document.querySelector('body')
 const prev = document.querySelector('.prev')
 const next = document.querySelector('.next')
 const playpause = document.querySelector('.playpause')
@@ -7,7 +8,7 @@ const currentTime = document.querySelector('#currentTime')
 const duration = document.querySelector('#duration')
 const seekSlider = document.getElementById('seek-slider');
 const volumeSlider = document.getElementById('volume-slider');
-const audioPlayerContainer = document.querySelector('body')
+const outputContainer = document.getElementById('volume-output');
 
 
 const songList = [
@@ -111,6 +112,7 @@ const displayBufferedAmount = () => {
     const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
     audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
 }
+audio.addEventListener('progress', displayBufferedAmount);
 
 if (audio.readyState > 0) {
     displayDuration();
@@ -128,9 +130,17 @@ audio.addEventListener('timeupdate', ()=>{
     let sec = audio.currentTime
     let total = audio.duration
     let audioPlayed = (sec/total)*100
-    displayBufferedAmount()
+    // displayBufferedAmount()
 
     currentTime.textContent = formatTime(sec)
     seekSlider.value = Math.floor(audio.currentTime);
+    audioPlayerContainer.style.setProperty('--seek-before-width', `${seekSlider.value / seekSlider.max * 100}%`);
 
 })
+
+volumeSlider.addEventListener('input', (e) => {
+    const value = e.target.value;
+
+    outputContainer.textContent = value;
+    audio.volume = value / 100;
+});
