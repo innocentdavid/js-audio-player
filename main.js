@@ -93,13 +93,6 @@ const showRangeProgress = (rangeInput) => {
     else audioPlayerContainer.style.setProperty('--volume-before-width', rangeInput.value / rangeInput.max * 100 + '%');
 }
 
-seekSlider.addEventListener('input', (e) => {
-    showRangeProgress(e.target);
-});
-volumeSlider.addEventListener('input', (e) => {
-    showRangeProgress(e.target);
-});
-
 const displayDuration = () => {
     duration.textContent = formatTime(audio.duration);
 }
@@ -130,6 +123,10 @@ audio.addEventListener('timeupdate', ()=>{
     let sec = audio.currentTime
     let total = audio.duration
     let audioPlayed = (sec/total)*100
+    let remaining = total-audioPlayed
+    if (audioPlayed) {
+        duration.textContent = formatTime(remaining)
+    }
     // displayBufferedAmount()
 
     currentTime.textContent = formatTime(sec)
@@ -138,7 +135,15 @@ audio.addEventListener('timeupdate', ()=>{
 
 })
 
+seekSlider.addEventListener('input', (e) => {
+    showRangeProgress(e.target);
+    const value = e.target.value;
+    
+    audio.currentTime = value
+});
+
 volumeSlider.addEventListener('input', (e) => {
+    showRangeProgress(e.target);
     const value = e.target.value;
 
     outputContainer.textContent = value;
