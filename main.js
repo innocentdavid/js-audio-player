@@ -7,6 +7,8 @@ const currentTime = document.querySelector('#currentTime')
 const duration = document.querySelector('#duration')
 const seekSlider = document.getElementById('seek-slider');
 const volumeSlider = document.getElementById('volume-slider');
+const audioPlayerContainer = document.querySelector('body')
+
 
 const songList = [
     {
@@ -64,9 +66,6 @@ function loadSong(songList) {
 let i = 0
 loadSong(songList[i]);
 // playSong(); // for auto play on-load
-audio.addEventListener('loadedmetadata', () => {
-    duration.textContent = formatTime(audio.duration)
-})
 
 function prevSong() {
     i--;
@@ -88,19 +87,39 @@ function nextSong() {
 }
 next.addEventListener("click", nextSong)
 
+const showRangeProgress = (rangeInput) => {
+    if (rangeInput === seekSlider) audioPlayerContainer.style.setProperty('--seek-before-width', rangeInput.value / rangeInput.max * 100 + '%');
+    else audioPlayerContainer.style.setProperty('--volume-before-width', rangeInput.value / rangeInput.max * 100 + '%');
+}
+
+seekSlider.addEventListener('input', (e) => {
+    showRangeProgress(e.target);
+});
+volumeSlider.addEventListener('input', (e) => {
+    showRangeProgress(e.target);
+});
+
+const displayDuration = () => {
+    duration.textContent = formatTime(audio.duration);
+}
+
+const setSliderMax = () => {
+    seekSlider.max = Math.floor(audio.duration);
+}
+
 const displayBufferedAmount = () => {
     const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
-    document.querySelector('body').style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
+    audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
 }
 
 if (audio.readyState > 0) {
-    // displayDuration();
-    // setSliderMax();
+    displayDuration();
+    setSliderMax();
     displayBufferedAmount();
 } else {
     audio.addEventListener('loadedmetadata', () => {
-        // displayDuration();
-        // setSliderMax();
+        displayDuration();
+        setSliderMax();
         displayBufferedAmount();
     });
 }
@@ -112,5 +131,6 @@ audio.addEventListener('timeupdate', ()=>{
     displayBufferedAmount()
 
     currentTime.textContent = formatTime(sec)
+    seekSlider.value = Math.floor(audio.currentTime);
 
 })
