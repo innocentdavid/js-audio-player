@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+    
+    <div styles="">
+        <a href="player2.html"><button>Player 2 <i class="fa fa-arrow-right"></i></button></a>
+    </div>
+
+    <div class="music">
+        
+        <div class="title-box">
+            <marquee behavior="" direction="" class="title">Music Name</marquee>
+        </div>
+        
+        <div class="player">
+            <audio src=""></audio>
+            <div class="status">
+                <span id="currentTime" class="time">0:00</span>
+                <input type="range" id="seek-slider" max="100" value="0">
+                <span id="duration" class="time">0:00</span>
+            </div>
+            <div class="btns">
+                <div class="prev icon"><i class="fa-solid fa-backward-fast"></i></div>
+                <div class="playpause icon"><i class="fa-solid fa-play"></i></div>
+                <div class="next icon"><i class="fa-solid fa-forward-fast"></i></div>
+            </div>
+            <div class="volume">
+                <output id="volume-output">100</output>
+                <input type="range" id="volume-slider" max="100" value="100">
+                <i class="fa-solid fa-volume-xmark"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="main.js"></script>
+</body>
+</html>
