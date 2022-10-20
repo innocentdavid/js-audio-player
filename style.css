@@ -5,10 +5,15 @@
   font-family: "Poppins", sans-serif;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 body {
-  --seek-before-width: 70%;
+  --seek-before-width: 0%;
   --volume-before-width: 100%;
-  --buffered-width: 80%;
+  --buffered-width: 0%;
   display: grid;
   place-items: center;
   min-height: 100vh;
@@ -204,4 +209,11 @@ input[type=range]::-ms-thumb {
 input[type=range]:active::-ms-thumb {
   transform: scale(1.2);
   background: #db143c;
+}
+
+.others {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }/*# sourceMappingURL=style.css.map */
